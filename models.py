@@ -54,7 +54,7 @@ if __name__=='__main__':
 	submission_file = 'submission/submission_'+model_name+'.csv'
 	figure_name = 'figures/loss_metric_'+model_name+'.jpg'
 
-	X_train, y_train, X_test = input(100000)
+	X_train, y_train, X_test = input(1000000)
 	X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 
 	history, prediction = dense_model(X_train, y_train, X_valid, y_valid, X_test)
