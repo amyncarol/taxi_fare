@@ -6,7 +6,7 @@ from input import input
 from utils import *
 
 # Training parameters
-BATCH_SIZE = 512
+BATCH_SIZE = 256
 EPOCHS = 10
 LEARNING_RATE = 0.001
 NROWS = 1000000
@@ -29,12 +29,12 @@ import numpy as np
 data = np.random.random((NROWS, NFEATURE))
 labels = np.random.random((NROWS, 10))
 
-model.fit(data, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
+#model.fit(data, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
 
 # # Instantiates a toy dataset instance:
-# dataset = tf.data.Dataset.from_tensor_slices((data, labels))
-# dataset = dataset.batch(BATCH_SIZE)
-# dataset = dataset.repeat()
+dataset = tf.data.Dataset.from_tensor_slices((data, labels))
+dataset = dataset.batch(BATCH_SIZE)
+dataset = dataset.repeat()
 
 # # Don't forget to specify `steps_per_epoch` when calling `fit` on a dataset.
-# model.fit(dataset, epochs=EPOCHS, steps_per_epoch=NROWS//BATCH_SIZE)
+model.fit(dataset, epochs=EPOCHS, steps_per_epoch=NROWS//BATCH_SIZE)
