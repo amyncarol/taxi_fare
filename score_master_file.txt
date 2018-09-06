@@ -25,3 +25,4 @@ dense: 4.346964846046129 (add wide layer)
 dense: 6.1263420158207635
 dense: 6.163011221519833
 dense: 5.270960248317778
+dense: 4.318447729585924 (add dropout to wide layers)
