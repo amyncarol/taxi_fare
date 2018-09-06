@@ -32,3 +32,5 @@ dense: 4.303632662871565 (increase dropout rate)
 
 dense: 4.151016910832068 (increase samples from 100000 to 500000,
 validation_loss jumping all over the place)
+
+dense: 4.075051820248517
