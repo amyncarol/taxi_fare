@@ -107,8 +107,12 @@ def add_features(df):
     df['pickup_datetime'] = df['pickup_datetime'].str.slice(0, 16)
     df['pickup_datetime'] = pd.to_datetime(df['pickup_datetime'], utc=True, format='%Y-%m-%d %H:%M')
     df['year'] = df.pickup_datetime.apply(lambda x:x.year)
-    df['weekday'] = df.pickup_datetime.apply(lambda x:x.weekday())
+    df['month'] = df.pickup_datetime.apply(lambda x: x.month)
+    df['day'] = df.pickup_datetime.apply(lambda x: x.day)
     df['hour'] = df.pickup_datetime.apply(lambda x:x.hour)
+    df['weekday'] = df.pickup_datetime.apply(lambda x:x.weekday())
+    df['night'] = df.apply(lambda x: night(x), axis=1)
+    df['late_night'] = df.apply(lambda x: late_night(x), axis=1)
 
     ##one_hot encoding
     df = pd.get_dummies(df, columns=['weekday'])
