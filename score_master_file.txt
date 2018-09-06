@@ -20,3 +20,8 @@ dense: 4.791565801497098 (add mahattan and euclidean distance)
 dense: 4.716888894228693 (add ploc and dloc)
 dense: 4.514455190877993 (add year, hour, weekday(one-hot))
 dense: 4.4368263870426174  (delete dropout layers)
+dense: 4.346964846046129 (add wide layer)
+
+dense: 6.1263420158207635
+dense: 6.163011221519833
+dense: 5.270960248317778
