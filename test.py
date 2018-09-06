@@ -6,7 +6,7 @@ from input import input
 from utils import *
 
 # Training parameters
-BATCH_SIZE = 32
+BATCH_SIZE = 256
 EPOCHS = 10
 LEARNING_RATE = 0.001
 NROWS = 100000
