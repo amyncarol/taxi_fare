@@ -19,13 +19,13 @@ def dense_model(X_train, y_train, X_valid, y_valid, X_test):
 	model = keras.Sequential()
 	model.add(keras.layers.Dense(256, activation='relu', input_dim=X_train.shape[1]))
 	model.add(keras.layers.BatchNormalization())
-	model.add(keras.layers.Dropout(0.3))
+	model.add(keras.layers.Dropout(0.2))
 	model.add(keras.layers.Dense(1024, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
-	model.add(keras.layers.Dropout(0.3))
+	model.add(keras.layers.Dropout(0.2))
 	model.add(keras.layers.Dense(256, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
-	model.add(keras.layers.Dropout(0.3))
+	model.add(keras.layers.Dropout(0.2))
 	model.add(keras.layers.Dense(32, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
@@ -51,7 +51,7 @@ if __name__=='__main__':
 	submission_file = 'submission/submission_'+model_name+'.csv'
 	figure_name = 'figures/loss_metric_'+model_name+'.png'
 
-	X_train, y_train, X_test = input(500000)
+	X_train, y_train, X_test = input(2000000)
 	X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 
 	history, prediction = dense_model(X_train, y_train, X_valid, y_valid, X_test)
