@@ -6,10 +6,10 @@ from input import input
 from utils import *
 
 # Training parameters
-BATCH_SIZE = 256
+BATCH_SIZE = 512
 EPOCHS = 10
 LEARNING_RATE = 0.001
-NROWS = 100000
+NROWS = 1000000
 NFEATURE = 20
 
 model = keras.Sequential()
