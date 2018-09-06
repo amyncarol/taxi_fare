@@ -103,6 +103,12 @@ def add_features(df):
     df['ploc'] = df['pickup_latitude']*df['pickup_longitude']
     df['dloc'] = df['dropoff_latitude']*df['dropoff_longitude']
 
+    ##locations:
+    df['pickup_longitude_binned'] = pd.qcut(df['pickup_longitude'], 16, labels=False)
+    df['dropoff_longitude_binned'] = pd.qcut(df['dropoff_longitude'], 16, labels=False)
+    df['pickup_latitude_binned'] = pd.qcut(df['pickup_latitude'], 16, labels=False)
+    df['dropoff_latitude_binned'] = pd.qcut(df['dropoff_latitude'], 16, labels=False)
+
     ##parse datetime (Note: read_csv.parse_datatime too too slow)
     df['pickup_datetime'] = df['pickup_datetime'].str.slice(0, 16)
     df['pickup_datetime'] = pd.to_datetime(df['pickup_datetime'], utc=True, format='%Y-%m-%d %H:%M')
