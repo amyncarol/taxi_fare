@@ -14,7 +14,7 @@ from input import input
 from utils import *
 
 # Training parameters
-BATCH_SIZE = 128
+BATCH_SIZE = 512
 EPOCHS = 40
 LEARNING_RATE = 0.001
 
