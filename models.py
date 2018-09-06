@@ -14,19 +14,27 @@ from utils import *
 
 # Training parameters
 BATCH_SIZE = 128
-EPOCHS = 20
+EPOCHS = 40
 LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
 	#model
 	model = Sequential()
-	model.add(Dense(64, activation='relu', input_dim=X_train.shape[1]))
+	model.add(Dense(256, activation='relu', input_dim=X_train.shape[1]))
 	model.add(BatchNormalization())
+	#model.add(Dropout(0.2))
+	model.add(Dense(128, activation='relu'))
+	model.add(BatchNormalization())
+	#model.add(Dropout(0.2))
 	model.add(Dense(64, activation='relu'))
 	model.add(BatchNormalization())
-	model.add(Dense(64, activation='relu'))
+	#model.add(Dropout(0.2))
+	model.add(Dense(32, activation='relu'))
 	model.add(BatchNormalization())
-	model.add(Dense(8, activation='relu'))
+	#model.add(Dropout(0.2))
+	model.add(Dense(16, activation='relu'))
+	model.add(BatchNormalization())
+	#model.add(Dropout(0.2))
 	model.add(Dense(1))
 
 	adam = optimizers.adam(lr=LEARNING_RATE)
@@ -46,7 +54,7 @@ if __name__=='__main__':
 	submission_file = 'submission/submission_'+model_name+'.csv'
 	figure_name = 'figures/loss_metric_'+model_name+'.jpg'
 
-	X_train, y_train, X_test = input()
+	X_train, y_train, X_test = input(100000)
 	X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 
 	history, prediction = dense_model(X_train, y_train, X_valid, y_valid, X_test)

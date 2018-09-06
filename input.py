@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 TRAIN_PATH = 'data/train.csv'
 TRAIN_FEATHER = 'data/train.feather'
+TRAIN_FEATHER_PROCESSED = 'data/train_processed.feather'
 TEST_PATH = 'data/test.csv'
 SUBMISSION = 'submission.csv'
 FEATHER_THREAD = 4
@@ -41,12 +42,13 @@ def read(csv_file, nrows = None, train_set=True):
     else:
         return pd.read_csv(csv_file, nrows = nrows, usecols = testcols, dtype = testtypes)
 
-def csv2feather(nrows = None):
+def csv2feather(nrows = None, process = False):
     """
     read the train csv file and save as feather
 
     Args:
         nrows: number of rows to read
+        process: clean the orignal data or not
     """
     traintypes = {'fare_amount': 'float32',
               'pickup_datetime': 'str', 
@@ -57,7 +59,12 @@ def csv2feather(nrows = None):
               'passenger_count': 'uint8'}
     traincols = list(traintypes.keys())
     df = pd.read_csv(TRAIN_PATH, nrows = nrows, usecols = traincols, dtype = traintypes)
-    df.to_feather(TRAIN_FEATHER)
+    if process:
+        df = clean(df)
+        df = add_features(df)        
+        df.to_feather(TRAIN_FEATHER_PROCESSED)
+    else:
+        df.to_feather(TRAIN_FEATHER)
 
 def clean(df, train_set=True):
     """
@@ -68,7 +75,8 @@ def clean(df, train_set=True):
     """
     if train_set:
         df = df.dropna(how='any', axis='rows') ##drop NAs
-        df = df[df.fare_amount>=0] ## drop negative fare
+        df = df[(df.fare_amount>=0) & (df.fare_amount<600)] ## drop negative fare and large fares
+        df = df[df.passenger_count<100] ## drop large passenger counts
 
         ##drop latitude and longitude that are not in NYC
         idx = (df.pickup_longitude<-70) & (df.pickup_longitude>-77) & \
@@ -76,7 +84,8 @@ def clean(df, train_set=True):
               (df.pickup_latitude<45) & (df.pickup_latitude>37) & \
               (df.dropoff_latitude<45) & (df.dropoff_latitude>37)
 
-        return df[idx]
+        df = df[idx]
+        return df.reset_index(drop=True)
 
     else:
         pass
@@ -89,6 +98,10 @@ def add_features(df):
     ##add vertical distance and horizontal distance
     df['delta_lon'] = df.pickup_longitude - df.dropoff_longitude
     df['delta_lat'] = df.pickup_latitude - df.dropoff_latitude
+    df['euclidean'] = (df['delta_lon'] ** 2 + df['delta_lat'] ** 2) ** 0.5
+    df['manhattan'] = np.abs(df['delta_lon'])+ np.abs(df['delta_lat'])
+    df['ploc'] = df['pickup_latitude']*df['pickup_longitude']
+    df['dloc'] = df['dropoff_latitude']*df['dropoff_longitude']
 
     ##parse datetime (Note: read_csv.parse_datatime too too slow)
     df['pickup_datetime'] = df['pickup_datetime'].str.slice(0, 16)
@@ -98,7 +111,12 @@ def add_features(df):
     df['hour'] = df.pickup_datetime.apply(lambda x:x.hour)
 
     ##one_hot encoding
-    #df = pd.get_dummies(df, columns=['weekday'])
+    df = pd.get_dummies(df, columns=['weekday'])
+
+    ##drop features
+    dropped_columns = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 
+                   'dropoff_longitude', 'dropoff_latitude']
+    df = df.drop(columns=dropped_columns)
 
     return df
 
@@ -106,7 +124,8 @@ def df_to_matrix(df, train_set=True):
     """
     pick features to numpy matrix
     """
-    features = ['passenger_count', 'year', 'weekday', 'hour', 'delta_lon', 'delta_lat']
+    features = [i for i in df.columns if i != 'fare_amount']
+    print('The features used are: {}'.format(features))
     X = df[features].values
     if train_set:
         y = df['fare_amount'].values
@@ -118,8 +137,10 @@ def input(train_row=None):
     normalize the features, provide inputs
     """
     print('read training data')
-    #df = read(TRAIN_PATH, nrows = train_row)
-    df = pd.read_feather(TRAIN_FEATHER, nthreads=FEATHER_THREAD)
+    if train_row:
+        df = read(TRAIN_PATH, nrows = train_row)
+    else:
+        df = pd.read_feather(TRAIN_FEATHER, nthreads=FEATHER_THREAD)
     df = clean(df)
     df = add_features(df)
     X_train, y_train =  df_to_matrix(df)
@@ -139,6 +160,19 @@ def input(train_row=None):
 
     return X_train, y_train, X_test
 
+def late_night(row):
+    if (row['hour'] <= 6) or (row['hour'] >= 20):
+        return 1
+    else:
+        return 0
+
+
+def night(row):
+    if ((row['hour'] <= 20) and (row['hour'] >= 16)) and (row['weekday'] < 5):
+        return 1
+    else:
+        return 0
+
 if __name__=='__main__':
     # ##read train set, small test
     start = time.time()
@@ -155,15 +189,15 @@ if __name__=='__main__':
     # print(X[:5])
     # print(y[:5])
     #--------------------test 2---------------------
-    #csv2feather()
+    csv2feather(process = True)
     #-------------------test 3----------------------
-    X_train, y_train, X_test = input()
-    print(X_train.shape)
-    print(y_train.shape)
-    print(X_test.shape)
-    print(X_train[:5])
-    print(y_train[:5])
-    print(X_test[:5])
+    # X_train, y_train, X_test = input()
+    # print(X_train.shape)
+    # print(y_train.shape)
+    # print(X_test.shape)
+    # print(X_train[:5])
+    # print(y_train[:5])
+    # print(X_test[:5])
     #--------------------------------------------
     end = time.time()
     print("Time spent {}".format(end - start))
