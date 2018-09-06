@@ -3,6 +3,7 @@ this handles all models, simple ones, and ensemble ones
 """
 
 from sklearn.model_selection import train_test_split
+from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, BatchNormalization
 from keras.callbacks import EarlyStopping
