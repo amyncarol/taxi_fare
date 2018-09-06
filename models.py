@@ -11,7 +11,7 @@ from utils import *
 
 # Training parameters
 BATCH_SIZE = 512
-EPOCHS = 100
+EPOCHS = 50
 LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
