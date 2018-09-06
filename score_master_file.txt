@@ -35,3 +35,4 @@ validation_loss jumping all over the place)
 
 dense: 4.075051820248517 (decrease dropout rate, validation_loss is more stable)
 dense: 4.229713061142367 (remove dropout totally, makes unstable validation at later stages)
+dense: 11.425791001500604
