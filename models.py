@@ -11,7 +11,7 @@ from utils import *
 
 # Training parameters
 BATCH_SIZE = 512
-EPOCHS = 100
+EPOCHS = 50
 LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
@@ -51,7 +51,7 @@ if __name__=='__main__':
 	submission_file = 'submission/submission_'+model_name+'.csv'
 	figure_name = 'figures/loss_metric_'+model_name+'.png'
 
-	X_train, y_train, X_test = input(100000)
+	X_train, y_train, X_test = input(500000)
 	X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 
 	history, prediction = dense_model(X_train, y_train, X_valid, y_valid, X_test)

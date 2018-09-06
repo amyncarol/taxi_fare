@@ -28,3 +28,6 @@ dense: 5.270960248317778
 dense: 4.318447729585924 (add dropout to wide layers)
 
 dense: 4.762461268018965 (add more time feature, but overfitted)
+dense: 4.303632662871565 (increase dropout rate)
+
+dense: 4.151016910832068 (increase samples from 100000 to 500000)
