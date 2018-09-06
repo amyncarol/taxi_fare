@@ -29,12 +29,12 @@ import numpy as np
 data = np.random.random((NROWS, NFEATURE))
 labels = np.random.random((NROWS, 10))
 
-#model.fit(data, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
+model.fit(data, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
 
-# # Instantiates a toy dataset instance:
-dataset = tf.data.Dataset.from_tensor_slices((data, labels))
-dataset = dataset.batch(BATCH_SIZE)
-dataset = dataset.repeat()
+# # # Instantiates a toy dataset instance:
+# dataset = tf.data.Dataset.from_tensor_slices((data, labels))
+# dataset = dataset.batch(BATCH_SIZE)
+# dataset = dataset.repeat()
 
-# # Don't forget to specify `steps_per_epoch` when calling `fit` on a dataset.
-model.fit(dataset, epochs=EPOCHS, steps_per_epoch=NROWS//BATCH_SIZE)
+# # # Don't forget to specify `steps_per_epoch` when calling `fit` on a dataset.
+# model.fit(dataset, epochs=EPOCHS, steps_per_epoch=NROWS//BATCH_SIZE)
