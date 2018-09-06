@@ -11,7 +11,7 @@ from utils import *
 
 # Training parameters
 BATCH_SIZE = 512
-EPOCHS = 50
+EPOCHS = 100
 LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
@@ -19,13 +19,13 @@ def dense_model(X_train, y_train, X_valid, y_valid, X_test):
 	model = keras.Sequential()
 	model.add(keras.layers.Dense(256, activation='relu', input_dim=X_train.shape[1]))
 	model.add(keras.layers.BatchNormalization())
-	#model.add(keras.layers.Dropout(0.2))
+	model.add(keras.layers.Dropout(0.3))
 	model.add(keras.layers.Dense(1024, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
-	#model.add(keras.layers.Dropout(0.2))
+	model.add(keras.layers.Dropout(0.3))
 	model.add(keras.layers.Dense(256, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
-	#model.add(keras.layers.Dropout(0.2))
+	model.add(keras.layers.Dropout(0.3))
 	model.add(keras.layers.Dense(32, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
