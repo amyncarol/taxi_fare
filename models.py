@@ -3,12 +3,8 @@ this handles all models, simple ones, and ensemble ones
 """
 
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from tensorflow import keras
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, BatchNormalization
-from keras.callbacks import EarlyStopping
-from keras import optimizers
-from keras import regularizers
 
 from input import input
 from utils import *
@@ -20,25 +16,25 @@ LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
 	#model
-	model = Sequential()
-	model.add(Dense(256, activation='relu', input_dim=X_train.shape[1]))
-	model.add(BatchNormalization())
+	model = keras.Sequential()
+	model.add(keras.layers.Dense(256, activation='relu', input_dim=X_train.shape[1]))
+	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
-	model.add(Dense(128, activation='relu'))
-	model.add(BatchNormalization())
+	model.add(keras.layers.Dense(128, activation='relu'))
+	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
-	model.add(Dense(64, activation='relu'))
-	model.add(BatchNormalization())
+	model.add(keras.layers.Dense(64, activation='relu'))
+	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
-	model.add(Dense(32, activation='relu'))
-	model.add(BatchNormalization())
+	model.add(keras.layers.Dense(32, activation='relu'))
+	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
-	model.add(Dense(16, activation='relu'))
-	model.add(BatchNormalization())
+	model.add(keras.layers.Dense(16, activation='relu'))
+	model.add(keras.layers.BatchNormalization())
 	#model.add(Dropout(0.2))
-	model.add(Dense(1))
+	model.add(keras.layers.Dense(1))
 
-	adam = optimizers.adam(lr=LEARNING_RATE)
+	adam = tf.train.AdamOptimizer(LEARNING_RATE)
 	model.compile(loss='mse', optimizer=adam, metrics=['mae'])
 	# early = EarlyStopping(monitor='val_loss', patience=15, mode='min')
 
