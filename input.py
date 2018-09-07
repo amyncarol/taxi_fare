@@ -132,35 +132,45 @@ def add_features(df):
 
     return df
 
+def get_feature_names(df):
+    """
+    choose features to use here
+    """
+    not_use = ['fare_amount']  # can add more features that we don't want here
+    features = [i for i in df.columns if i not in not_use]
+    print('The features used are: {}'.format(features))
+    return features
+
 def df_to_matrix(df, train_set=True):
     """
     pick features to numpy matrix
     """
-    features = [i for i in df.columns if i != 'fare_amount']
-    print('The features used are: {}'.format(features))
+    features = get_feature_names(df)
     X = df[features].values
     if train_set:
         y = df['fare_amount'].values
         return X, y
     return X
 
-def get_feature_names(df):
-    """
-    get names of the features
-    """
-    return [i for i in df.columns if i != 'fare_amount']
-
-def input(train_row=None):
+def input(train_row=None, process=False):
     """
     normalize the features, provide inputs, and feature names
+
+    Args:
+        train_row: how many train samples to use
+        process: process the features or not (some be already be processed)
     """
     print('read training data')
     if train_row:
         df = read(TRAIN_PATH, nrows = train_row)
-    else:
+        df = clean(df)
+        df = add_features(df)
+    elif process:
         df = pd.read_feather(TRAIN_FEATHER, nthreads=FEATHER_THREAD)
-    df = clean(df)
-    df = add_features(df)
+        df = clean(df)
+        df = add_features(df)
+    else:
+        df = pd.read_feather(TRAIN_FEATHER_PROCESSED, nthreads=FEATHER_THREAD)
     X_train, y_train =  df_to_matrix(df)
 
     print('read test data')
