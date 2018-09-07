@@ -104,21 +104,21 @@ def add_features(df):
     df['dloc'] = df['dropoff_latitude']*df['dropoff_longitude']
 
     ##locations:
-    df['pickup_longitude_binned'] = pd.qcut(df['pickup_longitude'], 16, labels=False)
-    df['dropoff_longitude_binned'] = pd.qcut(df['dropoff_longitude'], 16, labels=False)
-    df['pickup_latitude_binned'] = pd.qcut(df['pickup_latitude'], 16, labels=False)
-    df['dropoff_latitude_binned'] = pd.qcut(df['dropoff_latitude'], 16, labels=False)
+    df['pickup_longitude_binned'] = pd.qcut(df['pickup_longitude'], 16, labels=False).astype('uint8')
+    df['dropoff_longitude_binned'] = pd.qcut(df['dropoff_longitude'], 16, labels=False).astype('uint8')
+    df['pickup_latitude_binned'] = pd.qcut(df['pickup_latitude'], 16, labels=False).astype('uint8')
+    df['dropoff_latitude_binned'] = pd.qcut(df['dropoff_latitude'], 16, labels=False).astype('uint8')
 
     ##parse datetime (Note: read_csv.parse_datatime too too slow)
     df['pickup_datetime'] = df['pickup_datetime'].str.slice(0, 16)
     df['pickup_datetime'] = pd.to_datetime(df['pickup_datetime'], utc=True, format='%Y-%m-%d %H:%M')
-    df['year'] = df.pickup_datetime.apply(lambda x:x.year)
-    df['month'] = df.pickup_datetime.apply(lambda x: x.month)
-    df['day'] = df.pickup_datetime.apply(lambda x: x.day)
-    df['hour'] = df.pickup_datetime.apply(lambda x:x.hour)
-    df['weekday'] = df.pickup_datetime.apply(lambda x:x.weekday())
-    df['night'] = df.apply(lambda x: night(x), axis=1)
-    df['late_night'] = df.apply(lambda x: late_night(x), axis=1)
+    df['year'] = df.pickup_datetime.apply(lambda x:x.year).astype('uint16')
+    df['month'] = df.pickup_datetime.apply(lambda x: x.month).astype('uint8')
+    df['day'] = df.pickup_datetime.apply(lambda x: x.day).astype('uint8')
+    df['hour'] = df.pickup_datetime.apply(lambda x:x.hour).astype('uint8')
+    df['weekday'] = df.pickup_datetime.apply(lambda x:x.weekday()).astype('uint8')
+    df['night'] = df.apply(lambda x: night(x), axis=1).astype('uint8')
+    df['late_night'] = df.apply(lambda x: late_night(x), axis=1).astype('uint8')
 
     ##one_hot encoding
     df = pd.get_dummies(df, columns=['month'])
@@ -129,6 +129,8 @@ def add_features(df):
     dropped_columns = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 
                    'dropoff_longitude', 'dropoff_latitude']
     df = df.drop(columns=dropped_columns)
+
+    #print(df.dtypes)
 
     return df
 
@@ -217,7 +219,7 @@ if __name__=='__main__':
     # print(X[:5])
     # print(y[:5])
     #--------------------test 2---------------------
-    csv2feather(process = True)
+    csv2feather(nrows = 1000000, process = True)
     #-------------------test 3----------------------
     # X_train, y_train, X_test, feature_names = input()
     # print(X_train.shape)

@@ -83,12 +83,12 @@ class DenseModel():
             self.model.summary(print_fn=lambda x: f.write(x + '\n'))
             
 if __name__=='__main__':
-    model_name = 'dense'+'_'+'11'
+    model_name = 'dense'+'_'+'test'
     submission_file = 'submission/submission_'+model_name+'.csv'
     figure_name = 'figures/loss_metric_'+model_name+'.png'
     summary_file = 'model_summary/summary_'+model_name+'.txt'
 
-    X_train, y_train, X_test, feature_names = input(1000000)
+    X_train, y_train, X_test, feature_names = input()
     X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.10, random_state=42)
 
     model = DenseModel(feature_dim=X_train.shape[1])
