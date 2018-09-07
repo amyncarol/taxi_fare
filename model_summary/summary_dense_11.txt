@@ -1,0 +1,45 @@
+Training parameters: 
+Epochs: 50
+Learning rate: 0.001
+Batch size: 512
+
+Data info: 
+Dataset size: 881506
+Input dimension: 58
+Features used: ['passenger_count', 'delta_lon', 'delta_lat', 'euclidean', 'manhattan', 'ploc', 'dloc', 'pickup_longitude_binned', 'dropoff_longitude_binned', 'pickup_latitude_binned', 'dropoff_latitude_binned', 'year', 'day', 'night', 'late_night', 'month_1', 'month_2', 'month_3', 'month_4', 'month_5', 'month_6', 'month_7', 'month_8', 'month_9', 'month_10', 'month_11', 'month_12', 'weekday_0', 'weekday_1', 'weekday_2', 'weekday_3', 'weekday_4', 'weekday_5', 'weekday_6', 'hour_0', 'hour_1', 'hour_2', 'hour_3', 'hour_4', 'hour_5', 'hour_6', 'hour_7', 'hour_8', 'hour_9', 'hour_10', 'hour_11', 'hour_12', 'hour_13', 'hour_14', 'hour_15', 'hour_16', 'hour_17', 'hour_18', 'hour_19', 'hour_20', 'hour_21', 'hour_22', 'hour_23']
+
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense_1 (Dense)              (None, 256)               15104     
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 256)               1024      
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 256)               0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 1024)              263168    
+_________________________________________________________________
+batch_normalization_2 (Batch (None, 1024)              4096      
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 1024)              0         
+_________________________________________________________________
+dense_3 (Dense)              (None, 256)               262400    
+_________________________________________________________________
+batch_normalization_3 (Batch (None, 256)               1024      
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 256)               0         
+_________________________________________________________________
+dense_4 (Dense)              (None, 32)                8224      
+_________________________________________________________________
+batch_normalization_4 (Batch (None, 32)                128       
+_________________________________________________________________
+dense_5 (Dense)              (None, 16)                528       
+_________________________________________________________________
+batch_normalization_5 (Batch (None, 16)                64        
+_________________________________________________________________
+dense_6 (Dense)              (None, 1)                 17        
+=================================================================
+Total params: 555,777
+Trainable params: 552,609
+Non-trainable params: 3,168
+_________________________________________________________________

@@ -41,3 +41,5 @@ dense_test                              : 9.000592953964157
 dense_test     : 8.718952135593671
 dense_test1    : 9.305047451843256
 dense_10       : 4.264839962447921 (overfit, maybe too small sample?)
+
+dense_11       : 4.092727305895949
