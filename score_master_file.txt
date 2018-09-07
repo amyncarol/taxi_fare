@@ -21,18 +21,13 @@ dense: 4.716888894228693 (add ploc and dloc)
 dense: 4.514455190877993 (add year, hour, weekday(one-hot))
 dense: 4.4368263870426174  (delete dropout layers)
 dense: 4.346964846046129 (add wide layer)
-
 dense: 6.1263420158207635
 dense: 6.163011221519833
 dense: 5.270960248317778
 dense: 4.318447729585924 (add dropout to wide layers)
-
 dense: 4.762461268018965 (add more time feature, but overfitted)
 dense: 4.303632662871565 (increase dropout rate)
-
-dense: 4.151016910832068 (increase samples from 100000 to 500000,
-validation_loss jumping all over the place)
-
+dense: 4.151016910832068 (increase samples from 100000 to 500000, validation_loss jumping all over the place)
 dense: 4.075051820248517 (decrease dropout rate, validation_loss is more stable)
 dense: 4.229713061142367 (remove dropout totally, makes unstable validation at later stages)
 dense: 11.425791001500604
@@ -40,4 +35,8 @@ dense: 4.09377737276478 (samples increase to 2000000, dropout 0.2, validation_lo
 dense: 4.315473328454524 (add location features)
 dense: 5.279161009164467
 dense: 4.6989453530385
-dense: 4.0530388276349845
+dense: 4.0530388276349845(back to 1280 layer)
+dense_test: 9.13641855334647
+dense_test                              : 9.000592953964157
+dense_test     : 8.718952135593671
+dense_test1    : 9.305047451843256

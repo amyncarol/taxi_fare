@@ -144,9 +144,15 @@ def df_to_matrix(df, train_set=True):
         return X, y
     return X
 
+def get_feature_names(df):
+    """
+    get names of the features
+    """
+    return [i for i in df.columns if i != 'fare_amount']
+
 def input(train_row=None):
     """
-    normalize the features, provide inputs
+    normalize the features, provide inputs, and feature names
     """
     print('read training data')
     if train_row:
@@ -170,7 +176,7 @@ def input(train_row=None):
 
     print('data read complete')
 
-    return X_train, y_train, X_test
+    return X_train, y_train, X_test, get_feature_names(df)
 
 def late_night(row):
     if (row['hour'] <= 6) or (row['hour'] >= 20):
@@ -203,7 +209,7 @@ if __name__=='__main__':
     #--------------------test 2---------------------
     csv2feather(process = True)
     #-------------------test 3----------------------
-    # X_train, y_train, X_test = input()
+    # X_train, y_train, X_test, feature_names = input()
     # print(X_train.shape)
     # print(y_train.shape)
     # print(X_test.shape)

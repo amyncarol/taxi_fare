@@ -59,7 +59,7 @@ def write_score(model_name, history):
     """
     with open (SCORE_PATH, 'a') as f:
         f.write('\n')
-        f.write("{}: {}".format(model_name, sqrt(history.history['val_loss'][-1])))
+        f.write("{0: <15}: {1}".format(model_name, sqrt(history.history['val_loss'][-1])))
 
 
 
