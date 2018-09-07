@@ -38,3 +38,4 @@ dense: 4.229713061142367 (remove dropout totally, makes unstable validation at l
 dense: 11.425791001500604
 dense: 4.09377737276478 (samples increase to 2000000, dropout 0.2, validation_loss follows train_loss very well)
 dense: 4.315473328454524 (add location features)
+dense: 5.279161009164467
