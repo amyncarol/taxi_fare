@@ -15,7 +15,7 @@ EPOCHS = 50
 LEARNING_RATE = 0.001
 
 def dense_model(X_train, y_train, X_valid, y_valid, X_test):
-	#model
+	# model
 	model = keras.Sequential()
 	model.add(keras.layers.Dense(256, activation='relu', input_dim=X_train.shape[1]))
 	model.add(keras.layers.BatchNormalization())
@@ -23,9 +23,9 @@ def dense_model(X_train, y_train, X_valid, y_valid, X_test):
 	model.add(keras.layers.Dense(1024, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
 	model.add(keras.layers.Dropout(0.2))
-	model.add(keras.layers.Dense(2048, activation='relu'))
-	model.add(keras.layers.BatchNormalization())
-	model.add(keras.layers.Dropout(0.2))
+	# model.add(keras.layers.Dense(2048, activation='relu'))
+	# model.add(keras.layers.BatchNormalization())
+	# model.add(keras.layers.Dropout(0.2))
 	model.add(keras.layers.Dense(512, activation='relu'))
 	model.add(keras.layers.BatchNormalization())
 	model.add(keras.layers.Dropout(0.2))
