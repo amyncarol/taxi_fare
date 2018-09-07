@@ -121,7 +121,9 @@ def add_features(df):
     df['late_night'] = df.apply(lambda x: late_night(x), axis=1)
 
     ##one_hot encoding
+    df = pd.get_dummies(df, columns=['month'])
     df = pd.get_dummies(df, columns=['weekday'])
+    df = pd.get_dummies(df, columns=['hour'])
 
     ##drop features
     dropped_columns = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 
